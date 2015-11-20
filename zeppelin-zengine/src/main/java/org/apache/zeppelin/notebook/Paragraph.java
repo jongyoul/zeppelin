@@ -101,7 +101,7 @@ public class Paragraph extends Job implements Serializable, Cloneable {
     int scriptHeadIndex = 0;
     for (int i = 0; i < text.length(); i++) {
       char ch = text.charAt(i);
-      if (ch == ' ' || ch == '\n') {
+      if (ch == ' ' || ch == '\n' || ch == '(') {
         scriptHeadIndex = i;
         break;
       }
@@ -130,10 +130,10 @@ public class Paragraph extends Job implements Serializable, Cloneable {
     if (magic == null) {
       return text;
     }
-    if (magic.length() + 2 >= text.length()) {
+    if (magic.length() + 1 >= text.length()) {
       return "";
     }
-    return text.substring(magic.length() + 2);
+    return text.substring(magic.length() + 1);
   }
 
   public NoteInterpreterLoader getNoteReplLoader() {
