@@ -17,30 +17,53 @@
  */
 package org.apache.zeppelin.hive;
 
-import static org.junit.Assert.assertEquals;
-
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.*;
-import java.util.Calendar;
-import java.util.Map;
-import java.util.Properties;
+import java.sql.Date;
+import java.util.*;
 import java.util.concurrent.Executor;
 
 import org.apache.zeppelin.interpreter.InterpreterContext;
 import org.apache.zeppelin.interpreter.InterpreterResult;
 import org.junit.After;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
+import static java.lang.String.format;
 
 /**
  * Hive interpreter unit tests
  */
 public class HiveInterpreterTest {
-  @Before
-  public void setUp() throws Exception {
+  static String jdbcConnection;
+
+  private static String getJdbcConnection() throws IOException {
+    if(null == jdbcConnection) {
+      Path tmpDir = Files.createTempDirectory("h2-test-");
+      tmpDir.toFile().deleteOnExit();
+      jdbcConnection = format("jdbc:h2:%s", tmpDir);
+    }
+    return jdbcConnection;
+  }
+  @BeforeClass
+  public static void setUp() throws Exception {
+
+    Class.forName("org.h2.Driver");
+    Connection connection = DriverManager.getConnection(getJdbcConnection());
+    Statement statement = connection.createStatement();
+    statement.execute(
+        "DROP TABLE IF EXISTS test_table; " +
+        "CREATE TABLE test_table(id varchar(255), name varchar(255));");
+    statement.execute(
+        "insert into test_table(id, name) values ('a', 'a_name'),('b', 'b_name');"
+    );
   }
 
   @After
@@ -48,18 +71,63 @@ public class HiveInterpreterTest {
   }
 
   @Test
-  public void test() {
-    HiveInterpreter t = new MockHiveInterpreter(new Properties());
+  public void test() throws IOException {
+    Properties properties = new Properties();
+    properties.setProperty("default.driver", "org.h2.Driver");
+    properties.setProperty("default.url", getJdbcConnection());
+    properties.setProperty("default.user", "");
+    properties.setProperty("default.password", "");
+    HiveInterpreter t = new HiveInterpreter(properties);
     t.open();
 
+    InterpreterContext interpreterContext = new InterpreterContext(null, "a", null, null, null, null, null, null);
+
     //simple select test
-    InterpreterResult result = t.interpret("select * from t", null);
+    InterpreterResult result = t.interpret("select * from test_table", interpreterContext);
     assertEquals(result.type(), InterpreterResult.Type.TABLE);
 
     //explain test
-    result = t.interpret("explain select * from t", null);
+    result = t.interpret("explain select * from test_table", interpreterContext);
     assertEquals(result.type(), InterpreterResult.Type.TEXT);
     t.close();
+  }
+
+  @Test
+  public void parseMultiplePropertiesMap() {
+    Properties properties = new Properties();
+    properties.setProperty("default.driver", "defaultDriver");
+    properties.setProperty("default.url", "defaultUri");
+    properties.setProperty("default.user", "defaultUser");
+    HiveInterpreter hi = new HiveInterpreter(properties);
+    hi.open();
+    assertNotNull("propertiesMap is not null", hi.getPropertiesMap());
+    assertNotNull("propertiesMap.get(default) is not null", hi.getPropertiesMap().get("default"));
+    assertTrue("default exists", "defaultDriver".equals(hi.getPropertiesMap().get("default").getProperty("driver")));
+    hi.close();
+  }
+
+  @Test
+  public void ignoreInvalidSettings() {
+    Properties properties = new Properties();
+    properties.setProperty("default.driver", "defaultDriver");
+    properties.setProperty("default.url", "defaultUri");
+    properties.setProperty("default.user", "defaultUser");
+    properties.setProperty("presto.driver", "com.facebook.presto.jdbc.PrestoDriver");
+    HiveInterpreter hi = new HiveInterpreter(properties);
+    hi.open();
+    assertTrue("default exists", hi.getPropertiesMap().containsKey("default"));
+    assertFalse("presto doesn't exists", hi.getPropertiesMap().containsKey("presto"));
+    hi.close();
+  }
+
+  @Test
+  public void getPropertyKey() {
+    HiveInterpreter hi = new HiveInterpreter(new Properties());
+    String testCommand = "(default)\nshow tables";
+    assertEquals("get key of default", "default", hi.getPropertyKey(testCommand));
+    testCommand = "(default) show tables";
+    assertEquals("get key of default", "default", hi.getPropertyKey(testCommand));
+    hi.close();
   }
 }
 
@@ -69,11 +137,6 @@ class MockHiveInterpreter extends HiveInterpreter {
     super(property);
   }
 
-  @Override
-  public Connection getJdbcConnection()
-    throws SQLException {
-    return new MockConnection();
-  }
 }
 
 class MockResultSetMetadata implements ResultSetMetaData {
