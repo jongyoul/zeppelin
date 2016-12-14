@@ -694,6 +694,11 @@
       }
     };
 
+    $scope.toggleNotePersonalizedMode = function(personalizedMode) {
+      $scope.note.config.personalizedMode = !personalizedMode;
+      //clover
+    };
+
     var isSettingDirty = function() {
       if (angular.equals($scope.interpreterBindings, $scope.interpreterBindingsOrig)) {
         return false;
@@ -828,6 +833,7 @@
       if (note === undefined) {
         $location.path('/');
       }
+      console.log('clover ', note);
 
       $scope.paragraphUrl = $routeParams.paragraphId;
       $scope.asIframe = $routeParams.asIframe;
