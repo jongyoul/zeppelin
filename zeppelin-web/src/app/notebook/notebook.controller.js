@@ -770,7 +770,7 @@
           closable: true,
           title: 'Setting the result display',
           message: function(dialog) {
-            var modeText = $scope.note.config.personalizedMode === 'true' ? 'Collaboration' : 'Personalize';
+            var modeText = $scope.note.config.personalizedMode === 'true' ? 'collaborate' : 'personalize';
             return 'Do you want to <span class="text-info">' + modeText + '</span> your analysis?';
           },
           callback: function(result) {
