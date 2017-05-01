@@ -17,71 +17,40 @@
 
 package org.apache.zeppelin.interpreter;
 
-import com.google.common.base.Joiner;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Type;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.attribute.PosixFilePermission;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.internal.StringMap;
-import com.google.gson.reflect.TypeToken;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.NullArgumentException;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.aether.RepositoryException;
-import org.sonatype.aether.repository.Authentication;
-import org.sonatype.aether.repository.Proxy;
-import org.sonatype.aether.repository.RemoteRepository;
 
+import org.apache.zeppelin.cluster.ClusterManager;
 import org.apache.zeppelin.conf.ZeppelinConfiguration;
 import org.apache.zeppelin.conf.ZeppelinConfiguration.ConfVars;
-import org.apache.zeppelin.dep.Dependency;
 import org.apache.zeppelin.dep.DependencyResolver;
 import org.apache.zeppelin.display.AngularObjectRegistry;
 import org.apache.zeppelin.display.AngularObjectRegistryListener;
 import org.apache.zeppelin.helium.ApplicationEventListener;
-import org.apache.zeppelin.interpreter.Interpreter.RegisteredInterpreter;
 import org.apache.zeppelin.interpreter.remote.RemoteAngularObjectRegistry;
 import org.apache.zeppelin.interpreter.remote.RemoteInterpreter;
 import org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcessListener;
-import org.apache.zeppelin.scheduler.Job;
-import org.apache.zeppelin.scheduler.Job.Status;
 
 /**
  * Manage interpreters.
@@ -102,6 +71,8 @@ public class InterpreterFactory implements InterpreterGroupFactory {
   private final RemoteInterpreterProcessListener remoteInterpreterProcessListener;
   private final ApplicationEventListener appEventListener;
 
+  private final ClusterManager clusterManager;
+
   private boolean shiroEnabled;
 
   private Map<String, String> env = new HashMap<>();
@@ -112,7 +83,8 @@ public class InterpreterFactory implements InterpreterGroupFactory {
       AngularObjectRegistryListener angularObjectRegistryListener,
       RemoteInterpreterProcessListener remoteInterpreterProcessListener,
       ApplicationEventListener appEventListener, DependencyResolver depResolver,
-      boolean shiroEnabled, InterpreterSettingManager interpreterSettingManager)
+      boolean shiroEnabled, InterpreterSettingManager interpreterSettingManager,
+      ClusterManager clusterManager)
       throws InterpreterException, IOException, RepositoryException {
     this.conf = conf;
     this.angularObjectRegistryListener = angularObjectRegistryListener;
@@ -127,6 +99,8 @@ public class InterpreterFactory implements InterpreterGroupFactory {
     this.interpreterSettingManager = interpreterSettingManager;
     //TODO(jl): Fix it not to use InterpreterGroupFactory
     interpreterSettingManager.setInterpreterGroupFactory(this);
+
+    this.clusterManager = clusterManager;
 
     logger.info("shiroEnabled: {}", shiroEnabled);
   }
@@ -220,6 +194,13 @@ public class InterpreterFactory implements InterpreterGroupFactory {
         }
       }
       logger.info("Interpreter {} {} created", interpreter.getClassName(), interpreter.hashCode());
+
+      //Testing only
+      int connectTimeout = conf.getInt(ConfVars.ZEPPELIN_INTERPRETER_CONNECT_TIMEOUT);
+      interpreterGroup.setRemoteInterpreterProcess(clusterManager
+          .createInterpreter("uniq", interpreterSetting, connectTimeout,
+              remoteInterpreterProcessListener, appEventListener));
+
       interpreter.setInterpreterGroup(interpreterGroup);
     }
   }

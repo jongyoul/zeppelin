@@ -78,7 +78,6 @@
     <module>scio</module>
     <module>zeppelin-web</module>
     <module>zeppelin-server</module>
-    <module>zeppelin-cluster/yarn</module>
     <module>zeppelin-distribution</module>
   </modules>
 
@@ -107,8 +106,6 @@
     <commons.collections.version>3.2.1</commons.collections.version>
     <commons.logging.version>1.1.1</commons.logging.version>
     <shiro.version>1.2.3</shiro.version>
-
-    <hadoop.version>2.7.3</hadoop.version>
 
     <!-- test library versions -->
     <junit.version>4.12</junit.version>
@@ -257,30 +254,6 @@
         <groupId>org.apache.shiro</groupId>
         <artifactId>shiro-config-core</artifactId>
         <version>${shiro.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.apache.hadoop</groupId>
-        <artifactId>hadoop-yarn-client</artifactId>
-        <version>${hadoop.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.apache.hadoop</groupId>
-        <artifactId>hadoop-yarn-common</artifactId>
-        <version>${hadoop.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.apache.hadoop</groupId>
-        <artifactId>hadoop-yarn-api</artifactId>
-        <version>${hadoop.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.apache.hadoop</groupId>
-        <artifactId>hadoop-common</artifactId>
-        <version>${hadoop.version}</version>
       </dependency>
 
       <!-- Test libraries -->
