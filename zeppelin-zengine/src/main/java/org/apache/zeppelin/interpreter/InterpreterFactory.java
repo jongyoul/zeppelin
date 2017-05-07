@@ -165,6 +165,8 @@ public class InterpreterFactory implements InterpreterGroupFactory {
     List<InterpreterInfo> interpreterInfos = interpreterSetting.getInterpreterInfos();
     String path = interpreterSetting.getPath();
     InterpreterRunner runner = interpreterSetting.getInterpreterRunner();
+    String name = interpreterSetting.getName();
+    String group = interpreterSetting.getGroup();
     Interpreter interpreter;
     for (InterpreterInfo info : interpreterInfos) {
       if (option.isRemote()) {
@@ -194,14 +196,6 @@ public class InterpreterFactory implements InterpreterGroupFactory {
         }
       }
       logger.info("Interpreter {} {} created", interpreter.getClassName(), interpreter.hashCode());
-
-      //Testing only
-      if (null == interpreterGroup.getRemoteInterpreterProcess()) {
-        int connectTimeout = conf.getInt(ConfVars.ZEPPELIN_INTERPRETER_CONNECT_TIMEOUT);
-        interpreterGroup.setRemoteInterpreterProcess(clusterManager
-            .createInterpreter("uniq", interpreterSetting, connectTimeout,
-                remoteInterpreterProcessListener, appEventListener));
-      }
 
       interpreter.setInterpreterGroup(interpreterGroup);
     }
@@ -279,13 +273,14 @@ public class InterpreterFactory implements InterpreterGroupFactory {
   }
 
   Interpreter createRemoteRepl(String interpreterPath, String interpreterSessionKey,
-      String className, Properties property, String interpreterSettingId,
-      String userName, Boolean isUserImpersonate, InterpreterRunner interpreterRunner) {
+      String className, Properties property, String interpreterSettingId, String userName,
+      Boolean isUserImpersonate, InterpreterRunner interpreterRunner) {
     int connectTimeout = conf.getInt(ConfVars.ZEPPELIN_INTERPRETER_CONNECT_TIMEOUT);
     String localRepoPath = conf.getInterpreterLocalRepoPath() + "/" + interpreterSettingId;
     int maxPoolSize = conf.getInt(ConfVars.ZEPPELIN_INTERPRETER_MAX_POOL_SIZE);
     String interpreterRunnerPath;
     String interpreterGroupName = interpreterSettingManager.get(interpreterSettingId).getName();
+    String interpreterGroupStr = interpreterSettingManager.get(interpreterSettingId).getGroup();
     if (null != interpreterRunner) {
       interpreterRunnerPath = interpreterRunner.getPath();
       Path p = Paths.get(interpreterRunnerPath);
@@ -301,7 +296,8 @@ public class InterpreterFactory implements InterpreterGroupFactory {
         new RemoteInterpreter(property, interpreterSessionKey, className,
             interpreterRunnerPath, interpreterPath, localRepoPath, connectTimeout, maxPoolSize,
             remoteInterpreterProcessListener, appEventListener, userName, isUserImpersonate,
-            conf.getInt(ConfVars.ZEPPELIN_INTERPRETER_OUTPUT_LIMIT), interpreterGroupName);
+            conf.getInt(ConfVars.ZEPPELIN_INTERPRETER_OUTPUT_LIMIT), interpreterGroupName,
+            clusterManager, interpreterGroupStr);
     remoteInterpreter.addEnv(env);
 
     return new LazyOpenInterpreter(remoteInterpreter);

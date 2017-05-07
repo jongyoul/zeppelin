@@ -16,12 +16,12 @@
  */
 
 package org.apache.zeppelin.interpreter;
+
 /**
  * Interpreter related constants
- * 
- *
  */
 public class Constants {
+
   public static final String ZEPPELIN_INTERPRETER_PORT = "zeppelin.interpreter.port";
 
   public static final String ZEPPELIN_INTERPRETER_HOST = "zeppelin.interpreter.host";
@@ -32,4 +32,11 @@ public class Constants {
 
   public static final int ZEPPELIN_INTERPRETER_OUTPUT_LIMIT = 1024 * 100;
 
+  public static final String ZEPPELIN_CLUSTER_MANAGER_KEY = "zeppelin.cluster_manager";
+
+  public static final String ZEPPELIN_CLUSTER_MANAGER_YARN = "yarn";
+
+  public static final String ZEPPELIN_CLUSTER_MANAGER_LOCAL = "local";
+
+  public static final String ZEPPELIN_YARN_PROPERTY_KEY_PREFIX = "zeppelin.yarn.";
 }
