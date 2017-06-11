@@ -17,6 +17,10 @@
 
 package org.apache.zeppelin.interpreter;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -31,11 +35,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
-import com.google.common.base.Joiner;
-import com.google.common.base.Preconditions;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.apache.commons.lang.NullArgumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +55,7 @@ import org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcessListener;
  * Manage interpreters.
  */
 public class InterpreterFactory implements InterpreterGroupFactory {
+
   private static final Logger logger = LoggerFactory.getLogger(InterpreterFactory.class);
 
   private Map<String, URLClassLoader> cleanCl =
