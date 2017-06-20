@@ -19,6 +19,7 @@ package org.apache.zeppelin.conf;
 
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -478,7 +479,7 @@ public class ZeppelinConfiguration extends XMLConfiguration {
   }
 
   public String getHome() {
-    return getString(ConfVars.ZEPPELIN_HOME);
+    return Paths.get(getString(ConfVars.ZEPPELIN_HOME)).toAbsolutePath().toString();
   }
 
   public boolean isWindowsPath(String path){
@@ -512,6 +513,10 @@ public class ZeppelinConfiguration extends XMLConfiguration {
 
   public String getJettyName() {
     return getString(ConfVars.ZEPPELIN_SERVER_JETTY_NAME);
+  }
+
+  public String getMesosMaster() {
+    return getString(ConfVars.ZEPPELIN_CLUSTER_MESOS_MASTER);
   }
 
   public Map<String, String> dumpConfigurations(ZeppelinConfiguration conf,
@@ -669,7 +674,8 @@ public class ZeppelinConfiguration extends XMLConfiguration {
     ZEPPELIN_WEBSOCKET_MAX_TEXT_MESSAGE_SIZE("zeppelin.websocket.max.text.message.size", "1024000"),
     ZEPPELIN_SERVER_DEFAULT_DIR_ALLOWED("zeppelin.server.default.dir.allowed", false),
     ZEPPELIN_SERVER_JETTY_NAME("zeppelin.server.jetty.name", null),
-    ZEPPELIN_CLUSTER_DEFAULT("zeppelin.cluster.default", "local");
+    ZEPPELIN_CLUSTER_DEFAULT("zeppelin.cluster.default", "local"),
+    ZEPPELIN_CLUSTER_MESOS_MASTER("zeppelin.cluster.mesos.master", "localhost:5050");
 
     private String varName;
     @SuppressWarnings("rawtypes")

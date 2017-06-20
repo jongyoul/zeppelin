@@ -108,8 +108,8 @@ public class RemoteInterpreterServer
   Gson gson = new Gson();
 
   RemoteInterpreterService.Processor<RemoteInterpreterServer> processor;
-  private String callbackHost;
-  private int callbackPort;
+  protected String callbackHost;
+  protected int callbackPort;
   private String host;
   private int port;
   protected TThreadPoolServer server;
@@ -213,6 +213,10 @@ public class RemoteInterpreterServer
     if (server.isServing()) {
       System.exit(0);
     }
+  }
+
+  public String getHost() {
+    return host;
   }
 
   public int getPort() {

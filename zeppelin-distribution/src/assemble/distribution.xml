@@ -57,11 +57,18 @@
       </includes>
     </dependencySet>
     <dependencySet>
+      <outputDirectory>/lib/cluster/mesos</outputDirectory>
+      <includes>
+        <include>${project.groupId}:zeppelin-cluster-mesos</include>
+      </includes>
+    </dependencySet>
+    <dependencySet>
       <outputDirectory>/lib</outputDirectory>
       <excludes>
         <exclude>${project.groupId}:zeppelin-interpreter</exclude>
         <exclude>${project.groupId}:zeppelin-web</exclude>
         <exclude>${project.groupId}:zeppelin-cluster-common</exclude>
+        <exclude>${project.groupId}:zeppelin-cluster-yarn</exclude>
         <exclude>${project.groupId}:zeppelin-cluster-yarn</exclude>
       </excludes>
       <useProjectArtifact>false</useProjectArtifact>
@@ -116,6 +123,10 @@
     <fileSet>
       <outputDirectory>/lib/cluster/yarn</outputDirectory>
       <directory>../zeppelin-cluster/yarn/target/lib</directory>
+    </fileSet>
+    <fileSet>
+      <outputDirectory>/lib/cluster/mesos</outputDirectory>
+      <directory>../zeppelin-cluster/mesos/target/lib</directory>
     </fileSet>
     <fileSet>
       <outputDirectory>/lib/node_modules/zeppelin-vis</outputDirectory>

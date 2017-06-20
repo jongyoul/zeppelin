@@ -24,7 +24,6 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.servlet.DispatcherType;
 import javax.ws.rs.core.Application;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.web.env.EnvironmentLoaderListener;
 import org.apache.shiro.web.servlet.ShiroFilter;
@@ -47,6 +46,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.apache.zeppelin.cluster.ClusterManager;
+import org.apache.zeppelin.cluster.mesos.MesosScheduler;
 import org.apache.zeppelin.conf.ZeppelinConfiguration;
 import org.apache.zeppelin.conf.ZeppelinConfiguration.ConfVars;
 import org.apache.zeppelin.dep.DependencyResolver;
@@ -151,7 +151,15 @@ public class ZeppelinServer extends Application {
         new InterpreterOption(true));
     try {
       this.clusterManager = (ClusterManager) Class
-          .forName("org.apache.zeppelin.cluster.yarn.Client").getConstructor().newInstance();
+          .forName(MesosScheduler.class.getName()).getConstructor(String.class)
+          .newInstance(conf.getMesosMaster());
+      Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+        @Override
+        public void run() {
+          LOG.info("ClusterManager is stopping...");
+          clusterManager.stop();
+        }
+      }));
     } catch (Throwable t) {
       // TODO(jl): To be fixed
       this.clusterManager = null;

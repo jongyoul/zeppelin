@@ -36,6 +36,8 @@ public class Constants {
 
   public static final String ZEPPELIN_CLUSTER_MANAGER_YARN = "yarn";
 
+  public static final String ZEPPELIN_CLUSTER_MANAGER_MESOS = "mesos";
+
   public static final String ZEPPELIN_CLUSTER_MANAGER_LOCAL = "local";
 
   public static final String ZEPPELIN_YARN_VCORES_KEY = "zeppelin.yarn.vcores";

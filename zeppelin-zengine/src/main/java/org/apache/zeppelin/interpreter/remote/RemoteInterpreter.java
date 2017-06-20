@@ -17,16 +17,31 @@
 
 package org.apache.zeppelin.interpreter.remote;
 
-import java.util.*;
-
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import org.apache.thrift.TException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.apache.zeppelin.cluster.ClusterManager;
 import org.apache.zeppelin.display.AngularObject;
 import org.apache.zeppelin.display.AngularObjectRegistry;
 import org.apache.zeppelin.display.GUI;
-import org.apache.zeppelin.helium.ApplicationEventListener;
 import org.apache.zeppelin.display.Input;
-import org.apache.zeppelin.interpreter.*;
+import org.apache.zeppelin.helium.ApplicationEventListener;
+import org.apache.zeppelin.interpreter.Constants;
+import org.apache.zeppelin.interpreter.Interpreter;
+import org.apache.zeppelin.interpreter.InterpreterContext;
+import org.apache.zeppelin.interpreter.InterpreterContextRunner;
+import org.apache.zeppelin.interpreter.InterpreterException;
+import org.apache.zeppelin.interpreter.InterpreterGroup;
+import org.apache.zeppelin.interpreter.InterpreterResult;
+import org.apache.zeppelin.interpreter.WrappedInterpreter;
 import org.apache.zeppelin.interpreter.thrift.InterpreterCompletion;
 import org.apache.zeppelin.interpreter.thrift.RemoteInterpreterContext;
 import org.apache.zeppelin.interpreter.thrift.RemoteInterpreterResult;
@@ -34,11 +49,6 @@ import org.apache.zeppelin.interpreter.thrift.RemoteInterpreterResultMessage;
 import org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService.Client;
 import org.apache.zeppelin.scheduler.Scheduler;
 import org.apache.zeppelin.scheduler.SchedulerFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 /**
  * Proxy for Interpreter instance that runs on separate process
@@ -190,6 +200,12 @@ public class RemoteInterpreter extends Interpreter {
           }
           switch (clusterManagerKey) {
             case Constants.ZEPPELIN_CLUSTER_MANAGER_YARN:
+              remoteProcess = clusterManager
+                  .createInterpreter(sessionKey, interpreterGroupName, group, env, property,
+                      connectTimeout, remoteInterpreterProcessListener, applicationEventListener,
+                      homeDir, interpreterPath);
+              break;
+            case Constants.ZEPPELIN_CLUSTER_MANAGER_MESOS:
               remoteProcess = clusterManager
                   .createInterpreter(sessionKey, interpreterGroupName, group, env, property,
                       connectTimeout, remoteInterpreterProcessListener, applicationEventListener,

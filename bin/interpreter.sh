@@ -23,7 +23,7 @@ function usage() {
     echo "usage) $0 -p <port> -d <interpreter dir to load> -l <local interpreter repo dir to load> -g <interpreter group name>"
 }
 
-while getopts "hc:p:d:l:v:u:g:" o; do
+while getopts "hc:p:d:l:v:u:g:r:" o; do
     case ${o} in
         h)
             usage
@@ -56,6 +56,9 @@ while getopts "hc:p:d:l:v:u:g:" o; do
         g)
             INTERPRETER_GROUP_NAME=${OPTARG}
             ;;
+        r)
+            RUNNER_CLASS=${OPTARG}
+            ;;
         esac
 done
 
@@ -73,6 +76,12 @@ ZEPPELIN_INTP_CLASSPATH="${CLASSPATH}"
 if [[ -d "${ZEPPELIN_HOME}/zeppelin-interpreter/target/classes" ]]; then
   ZEPPELIN_INTP_CLASSPATH+=":${ZEPPELIN_HOME}/zeppelin-interpreter/target/classes"
 fi
+if [[ -d "${ZEPPELIN_HOME}/zeppelin-cluster/common/target/classes" ]]; then
+  ZEPPELIN_INTP_CLASSPATH+=":${ZEPPELIN_HOME}/zeppelin-cluster/common/target/classes"
+fi
+if [[ -d "${ZEPPELIN_HOME}/zeppelin-cluster/mesos/target/classes" ]]; then
+  ZEPPELIN_INTP_CLASSPATH+=":${ZEPPELIN_HOME}/zeppelin-cluster/mesos/target/classes"
+fi
 
 # add test classes for unittest
 if [[ -d "${ZEPPELIN_HOME}/zeppelin-interpreter/target/test-classes" ]]; then
@@ -85,9 +94,16 @@ fi
 addJarInDirForIntp "${ZEPPELIN_HOME}/zeppelin-interpreter/target/lib"
 addJarInDirForIntp "${ZEPPELIN_HOME}/lib/interpreter"
 addJarInDirForIntp "${INTERPRETER_DIR}"
+addJarInDirForIntp "${ZEPPELIN_HOME}/zeppelin-cluster/common/target/lib"
+addJarInDirForIntp "${ZEPPELIN_HOME}/zeppelin-cluster/mesos/target/lib"
 
 HOSTNAME=$(hostname)
-ZEPPELIN_SERVER=org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer
+
+if [ -n "${RUNNER_CLASS}" ]; then
+  ZEPPELIN_SERVER="${RUNNER_CLASS}"
+else
+  ZEPPELIN_SERVER=org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer
+fi
 
 INTERPRETER_ID=$(basename "${INTERPRETER_DIR}")
 ZEPPELIN_PID="${ZEPPELIN_PID_DIR}/zeppelin-interpreter-${INTERPRETER_ID}-${ZEPPELIN_IDENT_STRING}-${HOSTNAME}.pid"
