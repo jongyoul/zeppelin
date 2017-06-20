@@ -11,21 +11,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Dataset, DatasetType} from './dataset'
 
 /**
  * Create table data object from paragraph table type result
  */
-export default class TableData extends Dataset {
+export default class TableData {
   constructor (columns, rows, comment) {
-    super()
     this.columns = columns || []
     this.rows = rows || []
     this.comment = comment || ''
   }
 
   loadParagraphResult (paragraphResult) {
-    if (!paragraphResult || paragraphResult.type !== DatasetType.TABLE) {
+    if (!paragraphResult || paragraphResult.type !== 'TABLE') {
       console.log('Can not load paragraph result')
       return
     }

@@ -50,8 +50,7 @@ public class InterpreterResult implements Serializable {
     TABLE,
     IMG,
     SVG,
-    NULL,
-    NETWORK
+    NULL
   }
 
   Code code;
