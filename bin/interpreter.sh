@@ -96,6 +96,8 @@ addJarInDirForIntp "${ZEPPELIN_HOME}/lib/interpreter"
 addJarInDirForIntp "${INTERPRETER_DIR}"
 addJarInDirForIntp "${ZEPPELIN_HOME}/zeppelin-cluster/common/target/lib"
 addJarInDirForIntp "${ZEPPELIN_HOME}/zeppelin-cluster/mesos/target/lib"
+addJarInDirForIntp "${ZEPPELIN_HOME}/lib/cluster/common"
+addJarInDirForIntp "${ZEPPELIN_HOME}/lib/cluster/mesos"
 
 HOSTNAME=$(hostname)
 

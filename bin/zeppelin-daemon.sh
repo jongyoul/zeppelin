@@ -73,6 +73,8 @@ fi
 addJarInDir "${ZEPPELIN_HOME}"
 addJarInDir "${ZEPPELIN_HOME}/lib"
 addJarInDir "${ZEPPELIN_HOME}/lib/interpreter"
+addJarInDir "${ZEPPELIN_HOME}/lib/cluster/common"
+addJarInDir "${ZEPPELIN_HOME}/lib/cluster/mesos"
 addJarInDir "${ZEPPELIN_HOME}/zeppelin-interpreter/target/lib"
 addJarInDir "${ZEPPELIN_HOME}/zeppelin-zengine/target/lib"
 addJarInDir "${ZEPPELIN_HOME}/zeppelin-server/target/lib"
