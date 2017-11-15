@@ -242,7 +242,7 @@ module.exports = function makeWebpackConfig () {
       })
     )
   }
-  
+
   if (isTest) {
     config.module.postLoaders = [
       {
@@ -316,6 +316,11 @@ module.exports = function makeWebpackConfig () {
       app.use('**/components/', express.static(path.resolve(__dirname, './src/components/')));
     },
     stats: 'minimal',
+  };
+
+  config.node = {
+    fs: 'empty',
+    tls: 'empty'
   };
 
   return config;

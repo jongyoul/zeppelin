@@ -15,14 +15,34 @@
  * limitations under the License.
  */
 
-import 'headroom.js'
-import 'headroom.js/dist/angular.headroom'
+import 'angular'
+import 'angular-animate'
+import 'angular-cookies'
+import 'angular-drag-drop'
+import 'angular-route'
+import 'angular-sanitize'
+import 'angular-websocket'
+import 'ng-sortable'
+import 'angular-touch'
+import 'angular-filter'
+import 'angular-elastic'
+import 'angular-elastic-input'
+import 'angular-xeditable'
+import 'ng-toast'
+import 'ng-focus-if'
+import 'angular-resource'
+import 'ngclipboard'
 
-import 'scrollmonitor/scrollMonitor.js'
 import 'angular-viewport-watch/angular-viewport-watch.js'
+import 'scrollmonitor/scrollMonitor.js'
 
+import 'angular-ui-ace'
 import 'angular-ui-grid/ui-grid.css'
 import 'angular-ui-grid'
+import 'angular-ui-bootstrap'
+
+import 'headroom.js'
+import 'headroom.js/dist/angular.headroom'
 
 const requiredModules = [
   'ngCookies',
@@ -34,7 +54,7 @@ const requiredModules = [
   'ui.bootstrap',
   'as.sortable',
   'ngTouch',
-  'ngDragDrop',
+  'filearts.dragDrop',
   'angular.filter',
   'monospaced.elastic',
   'puElasticInput',
@@ -168,7 +188,7 @@ let zeppelinWebApp = angular.module('zeppelinWebApp', requiredModules)
   .constant('TRASH_FOLDER_ID', '~Trash')
 
 function auth () {
-  let $http = angular.injector(['ng']).get('$http')
+  let $http = angular.injector(['ng', 'ngMock']).get('$http')
   let baseUrlSrv = angular.injector(['zeppelinWebApp']).get('baseUrlSrv')
   // withCredentials when running locally via grunt
   $http.defaults.withCredentials = true
