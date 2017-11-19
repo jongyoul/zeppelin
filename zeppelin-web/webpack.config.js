@@ -139,6 +139,7 @@ module.exports = function makeWebpackConfig () {
   // Initialize module
   config.module = {
     preLoaders: [],
+    noParse: /(\/bindings\/|\.html$)/,
     loaders: [{
       // headroom 0.9.3 doesn't work with webpack
       // https://github.com/WickyNilliams/headroom.js/issues/213#issuecomment-281106943
@@ -179,7 +180,7 @@ module.exports = function makeWebpackConfig () {
       // HTML LOADER
       // Reference: https://github.com/webpack/raw-loader
       // Allow loading html through js
-      test: /\.html$/,
+      test: /index\.html$/,
       loader: 'raw'
     }, {
       // STRING REPLACE PLUGIN
@@ -195,7 +196,16 @@ module.exports = function makeWebpackConfig () {
           }
         }
       ]})
+    }, {
+      test: /\.html$/,
+      exclude: [path.resolve(__dirname, 'src/index.html')],
+      loader: 'raw!ng-include-loader',
     }],
+    rules: []
+  };
+
+  config.htmlLoader = {
+    root: path.resolve(__dirname, 'src')
   };
 
   /**
@@ -219,6 +229,10 @@ module.exports = function makeWebpackConfig () {
       // Extract css files
       // Disabled when in test mode or not in build mode
       new ExtractTextPlugin('[name].[hash].css', {disable: !isProd}),
+
+    new webpack.ProvidePlugin({
+      'window.jQuery': 'jquery'
+    }),
   ];
 
   // Skip rendering index.html in test mode

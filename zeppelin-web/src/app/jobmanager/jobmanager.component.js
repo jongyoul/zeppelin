@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-import './job/job.component'
+// import { JobController} from './job/job.component'
 import { JobManagerFilter } from './jobmanager.filter'
 import { JobManagerService} from './jobmanager.service'
 

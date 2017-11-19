@@ -19,6 +19,7 @@ import 'angular'
 import 'angular-animate'
 import 'angular-cookies'
 import 'angular-drag-drop'
+import 'angular-mocks'
 import 'angular-route'
 import 'angular-sanitize'
 import 'angular-websocket'
@@ -43,10 +44,12 @@ import 'angular-ui-bootstrap'
 
 import 'headroom.js'
 import 'headroom.js/dist/angular.headroom'
+import * as jQuery from 'jquery'
 
 const requiredModules = [
   'ngCookies',
   'ngAnimate',
+  'ngMock',
   'ngRoute',
   'ngSanitize',
   'angular-websocket',

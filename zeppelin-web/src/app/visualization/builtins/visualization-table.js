@@ -1,3 +1,4 @@
+/* eslint-disable import/no-webpack-loader-syntax */
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +25,7 @@ import {
   parseTableOption,
 } from './visualization-util'
 
-const SETTING_TEMPLATE = require('./visualization-table-setting.html')
+const SETTING_TEMPLATE = require('html-loader!./visualization-table-setting.html')
 
 const TABLE_OPTION_SPECS = [
   {

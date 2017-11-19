@@ -1,3 +1,4 @@
+/* eslint-disable import/no-webpack-loader-syntax */
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +31,8 @@ import { ParagraphStatus, } from '../paragraph.status'
 
 const AnsiUp = require('ansi_up')
 const AnsiUpConverter = new AnsiUp.default // eslint-disable-line new-parens,new-cap
-const TableGridFilterTemplate = require('../../../visualization/builtins/visualization-table-grid-filter.html')
+const TableGridFilterTemplate =
+  require('html-loader!../../../visualization/builtins/visualization-table-grid-filter.html')
 
 angular.module('zeppelinWebApp').controller('ResultCtrl', ResultCtrl)
 
