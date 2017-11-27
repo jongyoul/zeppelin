@@ -42,7 +42,7 @@
     "angular-ui-ace": "0.2.3",
     "angular-ui-bootstrap": "~2.5.6",
     "angular-ui-grid": "^4.0.4",
-    "angular-viewport-watch": "github:shahata/angular-viewport-watch",
+    "angular-viewport-watch": "github:wix/angular-viewport-watch",
     "angular-websocket": "2.0.1",
     "angular-xeditable": "0.8.0",
     "ansi_up": "^2.0.2",

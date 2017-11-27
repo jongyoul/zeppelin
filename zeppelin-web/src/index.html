@@ -12,7 +12,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<html ng-controller="MainCtrl" class="no-js">
+<html ng-app="zeppelinWebApp" ng-controller="MainCtrl" class="no-js">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta charset="utf-8" />
@@ -37,8 +37,8 @@ limitations under the License.
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <!-- endbower -->
-    <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery-ui.css" />
-    <link rel="stylesheet" href="bower_components/select2/dist/css/select2.css" />
+    <!--<link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery-ui.css" /> -->
+    <!--<link rel="stylesheet" href="bower_components/select2/dist/css/select2.css" /> -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="components/navbar/navbar.css" />
@@ -66,7 +66,8 @@ limitations under the License.
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <toast></toast>
-    <div ng-include src="'components/navbar/navbar.html'"></div>
+    <!--<div ng-include src="'components/navbar/navbar.html'"></div>-->
+    <nav></nav>
     <!-- Add your site or application content here -->
     <div id="main" class="container">
       <div ng-view></div>
