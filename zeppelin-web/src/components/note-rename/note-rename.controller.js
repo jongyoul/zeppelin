@@ -14,7 +14,13 @@
 
 import './note-rename.css'
 
-angular.module('zeppelinWebApp').controller('NoteRenameCtrl', NoteRenameController)
+angular.module('zeppelinWebApp').directive('noteRename', function() {
+  return {
+    scope: true,
+    templateUrl: 'components/note-rename/note-rename.html',
+    controller: NoteRenameController
+  }
+})
 
 function NoteRenameController($scope) {
   'ngInject'

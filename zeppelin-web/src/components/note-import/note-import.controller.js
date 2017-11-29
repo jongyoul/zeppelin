@@ -14,7 +14,14 @@
 
 import './note-import.css'
 
-angular.module('zeppelinWebApp').controller('NoteImportCtrl', NoteImportCtrl)
+angular.module('zeppelinWebApp').directive('noteImport', function() {
+  return {
+    scope: true,
+    templateUrl: 'components/note-import/note-import.html',
+    controller: NoteImportCtrl,
+    controllerAs: 'noteImportCtrl'
+  }
+})
 
 function NoteImportCtrl ($scope, $timeout, websocketMsgSrv) {
   'ngInject'

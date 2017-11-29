@@ -16,6 +16,15 @@ import './note-create.css'
 
 angular.module('zeppelinWebApp').controller('NoteCreateCtrl', NoteCreateCtrl)
 
+angular.module('zeppelinWebApp').directive('noteCreate', function() {
+  return {
+    scope: true,
+    templateUrl: 'components/note-create/note-create.html',
+    controller: NoteCreateCtrl,
+    controllerAs: 'noteCreateCtrl'
+  }
+})
+
 function NoteCreateCtrl ($scope, noteListFactory, $routeParams, websocketMsgSrv) {
   'ngInject'
 

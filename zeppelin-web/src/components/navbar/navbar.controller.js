@@ -12,7 +12,14 @@
  * limitations under the License.
  */
 
-angular.module('zeppelinWebApp').controller('NavCtrl', NavCtrl)
+angular.module('zeppelinWebApp').directive('navBar', function () {
+  return {
+    scope: true,
+    templateUrl: 'components/navbar/navbar.html',
+    controller: NavCtrl,
+    controllerAs: 'navbar'
+  }
+})
 
 function NavCtrl ($scope, $rootScope, $http, $routeParams, $location,
                  noteListFactory, baseUrlSrv, websocketMsgSrv,

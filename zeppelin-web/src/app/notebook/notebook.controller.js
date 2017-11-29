@@ -18,6 +18,13 @@ import { isParagraphRunning, } from './paragraph/paragraph.status'
 
 angular.module('zeppelinWebApp').controller('NotebookCtrl', NotebookCtrl)
 
+angular.module('zeppelinWebApp').directive('shortcut', function () {
+  return {
+    scope: true,
+    templateUrl: 'app/notebook/shortcut.html'
+  }
+})
+
 function NotebookCtrl ($scope, $route, $routeParams, $location, $rootScope,
                       $http, websocketMsgSrv, baseUrlSrv, $timeout, saveAsService,
                       ngToast, noteActionService, noteVarShareService, TRASH_FOLDER_ID,

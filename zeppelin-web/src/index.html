@@ -74,25 +74,17 @@ limitations under the License.
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <toast></toast>
-    <div ng-include src="'components/navbar/navbar.html'"></div>
+    <nav-bar></nav-bar>
     <!-- Add your site or application content here -->
     <div id="main" class="container">
       <div ng-view></div>
     </div>
     <!-- global :: dialogs -->
-    <div ng-include src="'app/notebook/shortcut.html'"></div>
-    <div ng-controller="NoteCreateCtrl as noteCreateCtrl">
-      <div id="note-modal-container" ng-include src="'components/note-create/note-create.html'"></div>
-    </div>
-    <div ng-controller="NoteImportCtrl as noteImportCtrl">
-      <div id="note-import-container" ng-include src="'components/note-import/note-import.html'"></div>
-    </div>
-    <div ng-controller="LoginCtrl">
-      <div id="login-container" ng-include src="'components/login/login.html'"></div>
-    </div>
-    <div ng-controller="NoteRenameCtrl">
-      <div ng-include src="'components/note-rename/note-rename.html'"></div>
-    </div>
+    <shortcut></shortcut>
+    <note-create id="note-modal-container"></note-create>
+    <note-import id="note-import-container"></note-import>
+    <login id="login-container"></login>
+    <note-rename></note-rename>
     <!-- build:js(.) scripts/oldieshim.js -->
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>

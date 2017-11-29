@@ -12,7 +12,13 @@
  * limitations under the License.
  */
 
-angular.module('zeppelinWebApp').controller('LoginCtrl', LoginCtrl)
+angular.module('zeppelinWebApp').directive('login', function() {
+  return {
+    scope: true,
+    templateUrl: 'components/login/login.html',
+    controller: LoginCtrl
+  }
+})
 
 function LoginCtrl ($scope, $rootScope, $http, $httpParamSerializer, baseUrlSrv, $location, $timeout) {
   'ngInject'
