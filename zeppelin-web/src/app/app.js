@@ -83,7 +83,9 @@ let zeppelinWebApp = angular.module('zeppelinWebApp', requiredModules)
 
     $routeProvider
       .when('/', {
-        templateUrl: 'app/home/home.html'
+        templateUrl: 'app/home/home.html',
+        controller: 'HomeCtrl',
+        controllerAs: 'home'
       })
       .when('/notebook/:noteId', {
         templateUrl: 'app/notebook/notebook.html',

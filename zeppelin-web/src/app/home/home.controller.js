@@ -14,7 +14,14 @@
 
 angular.module('zeppelinWebApp').controller('HomeCtrl', HomeCtrl)
 
-function HomeCtrl ($scope, noteListFactory, websocketMsgSrv, $rootScope, arrayOrderingSrv,
+angular.module('zeppelinWebApp').directive('notebookTemplate', function () {
+  return {
+    scope: true,
+    templateUrl: 'app/home/notebook-template.html',
+  }
+})
+
+function HomeCtrl($scope, noteListFactory, websocketMsgSrv, $rootScope, arrayOrderingSrv,
                   ngToast, noteActionService, TRASH_FOLDER_ID) {
   'ngInject'
 

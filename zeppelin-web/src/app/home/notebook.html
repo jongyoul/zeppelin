@@ -26,14 +26,20 @@ limitations under the License.
          <h5 ng-controller="NoteCreateCtrl as noteCreateCtrl"><a href="" data-toggle="modal" data-target="#noteCreateModal" style="text-decoration: none;" ng-click="noteCreateCtrl.getInterpreterSettings();">
            <i style="font-size: 15px;" class="icon-notebook"></i> Create new note</a></h5>
        <ul id="notebook-names">
-         <li class="filter-names" ng-include="'components/note-name-filter/note-name-filter.html'"></li>
+         <li class="filter-names">
+           <note-name-filter></note-name-filter>
+         </li>
          <div ng-if="!query.q || query.q === ''" infinite-scroll="loadMoreNotes()">
            <li ng-repeat="node in home.notes.root.children | limitTo:home.numberOfNotesDisplayed track by $index"
-               ng-include src="'app/home/notebook-template.html'" ng-class="note_folder_renderer"></li>
+               ng-class="note_folder_renderer">
+             <notebook-template></notebook-template>
+           </li>
          </div>
          <div ng-if="query.q" infinite-scroll="loadMoreNotes()">
            <li ng-repeat="node in home.notes.flatList | filter:query.q | orderBy:home.arrayOrderingSrv.noteFlatListOrdering | limitTo:home.numberOfNotesDisplayed track by $index"
-               ng-include src="'app/home/notebook-template.html'" ng-class="note_folder_renderer"></li>
+               ng-class="note_folder_renderer">
+             <notebook-template></notebook-template>
+           </li>
          </div>
        </ul>
     </div>

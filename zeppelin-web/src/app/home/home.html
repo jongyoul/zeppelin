@@ -11,7 +11,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<div ng-controller="HomeCtrl as home" data-ng-init="initHome()">
+<div data-ng-init="initHome()">
   <div ng-show="home.staticHome" class="box width-full home">
     <div class="zeppelin">
       <div class="zeppelin2"></div>
@@ -46,11 +46,15 @@ limitations under the License.
               </li>
               <div ng-if="!query.q || query.q === ''" infinite-scroll="loadMoreNotes()">
                 <li ng-repeat="node in home.notes.root.children | limitTo:home.numberOfNotesDisplayed track by $index"
-                    ng-include src="'app/home/notebook-template.html'" ng-class="note_folder_renderer"></li>
+                    ng-class="note_folder_renderer">
+                  <notebook-template></notebook-template>
+                </li>
               </div>
               <div ng-if="query.q" infinite-scroll="loadMoreNotes()">
                 <li ng-repeat="node in home.notes.flatList | filter:query.q | orderBy:home.arrayOrderingSrv.noteFlatListOrdering | limitTo:home.numberOfNotesDisplayed track by $index"
-                    ng-include src="'app/home/notebook-template.html'" ng-class="note_folder_renderer"></li>
+                    ng-class="note_folder_renderer">
+                  <notebook-template></notebook-template>
+                </li>
              </div>
             </ul>
           </div>
@@ -85,9 +89,9 @@ limitations under the License.
        style="margin: 0; padding: 0;">
     <div id="{{currentParagraph.id}}_paragraphColumn"
          ng-if="currentParagraph.results"
-         ng-include src="'app/notebook/paragraph/paragraph.html'"
          ng-class="{'paragraph-space box paragraph-margin': !asIframe, 'focused': paragraphFocused}"
          ng-hide="currentParagraph.config.tableHide && home.viewOnly">
+      <paragraph></paragraph>
     </div>
   </div>
 

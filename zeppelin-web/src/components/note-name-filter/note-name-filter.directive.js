@@ -16,7 +16,5 @@ angular.module('zeppelinWebApp').directive('noteNameFilter', function () {
   return {
     scope: true,
     templateUrl: 'components/note-name-filter/note-name-filter.html',
-    controller: function () {
-    }
   }
 })
