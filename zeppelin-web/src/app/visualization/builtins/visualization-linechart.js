@@ -164,8 +164,7 @@ export default class LinechartVisualization extends Nvd3ChartVisualization {
           zoom
         </label>
       </div>
-      <ng-include src="'app/visualization/builtins/visualization-displayXAxis.html'">
-      </ng-include>`,
+      <visualization-display-x-axis></visualization-display-x-axis>`,
       scope: {
         config: configObj,
         save: function () {

@@ -34,6 +34,7 @@ import './app/visualization/builtins/visualization-piechart.js'
 import './app/visualization/builtins/visualization-areachart.js'
 import './app/visualization/builtins/visualization-linechart.js'
 import './app/visualization/builtins/visualization-scatterchart.js'
+import './app/visualization/builtins/visualization.directive.js'
 
 import './app/jobmanager/jobmanager.component.js'
 import './app/interpreter/interpreter.controller.js'
