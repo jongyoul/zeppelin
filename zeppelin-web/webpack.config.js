@@ -242,7 +242,7 @@ module.exports = function makeWebpackConfig () {
       })
     )
   }
-  
+
   if (isTest) {
     config.module.postLoaders = [
       {
