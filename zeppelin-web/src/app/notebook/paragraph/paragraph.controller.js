@@ -28,13 +28,6 @@ const ParagraphExecutor = {
 
 angular.module('zeppelinWebApp').controller('ParagraphCtrl', ParagraphCtrl)
 
-angular.module('zeppelinWebApp').directive('paragraph', function () {
-  return {
-    scope: true,
-    templateUrl: 'app/notebook/paragraph/paragraph.html'
-  }
-})
-
 function ParagraphCtrl ($scope, $rootScope, $route, $window, $routeParams, $location,
                        $timeout, $compile, $http, $q, websocketMsgSrv,
                        baseUrlSrv, ngToast, noteVarShareService,
