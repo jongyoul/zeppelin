@@ -48,12 +48,14 @@ limitations under the License.
               <li class="filter-names"><note-name-filter></note-name-filter></li>
               <div ng-if="!query.q || query.q === ''" infinite-scroll="loadMoreNotes()">
               <li ng-repeat="node in navbar.notes.root.children | limitTo:navbar.numberOfNotesDisplayed track by node.id"
-                  ng-class="{'active' : navbar.isActive(node.id)}" ng-include="'components/navbar/navbar-note-list-elem.html'">
+                  ng-class="{'active' : navbar.isActive(node.id)}">
+                <navbar-note-list-elem></navbar-note-list-elem>
               </li>
             </div>
             <div ng-if="query.q" infinite-scroll="myPagingFunction()">
               <li ng-repeat="node in navbar.notes.flatList | filter : query.q | orderBy:navbar.arrayOrderingSrv.noteFlatListOrdering | limitTo:navbar.numberOfNotesDisplayed track by node.id"
-                  ng-class="{'active' : navbar.isActive(node.id)}" ng-include="'components/navbar/navbar-note-list-elem.html'">
+                  ng-class="{'active' : navbar.isActive(node.id)}">
+                <navbar-note-list-elem></navbar-note-list-elem>
               </li>
             </div>
             </div>

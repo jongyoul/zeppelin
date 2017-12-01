@@ -21,6 +21,15 @@ angular.module('zeppelinWebApp').directive('navBar', function () {
   }
 })
 
+angular.module('zeppelinWebApp').directive('navbarNoteListElem', function () {
+  return {
+    scope: true,
+    templateUrl: 'components/navbar/navbar-note-list-elem.html',
+    controller: NavCtrl,
+    controllerAs: 'navbar'
+  }
+})
+
 function NavCtrl ($scope, $rootScope, $http, $routeParams, $location,
                  noteListFactory, baseUrlSrv, websocketMsgSrv,
                  arrayOrderingSrv, searchService, TRASH_FOLDER_ID) {

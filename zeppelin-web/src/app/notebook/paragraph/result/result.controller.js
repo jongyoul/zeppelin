@@ -34,6 +34,14 @@ const TableGridFilterTemplate = require('../../../visualization/builtins/visuali
 
 angular.module('zeppelinWebApp').controller('ResultCtrl', ResultCtrl)
 
+angular.module('zeppelinWebApp').directive('resultChartSelector', function () {
+  return {
+    restrict: 'E',
+    scope: true,
+    templateUrl: 'app/notebook/paragraph/result/result-chart-selector.html'
+  }
+})
+
 function ResultCtrl ($scope, $rootScope, $route, $window, $routeParams, $location,
                     $timeout, $compile, $http, $q, $templateCache, $templateRequest, $sce, websocketMsgSrv,
                     baseUrlSrv, ngToast, saveAsService, noteVarShareService, heliumService,
