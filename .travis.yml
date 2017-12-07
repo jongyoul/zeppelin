@@ -33,7 +33,7 @@ addons:
     - r-packages-precise
     packages:
     - r-base-dev
-  firefox: "latest"
+  firefox: "41"
 
 env:
   global:
