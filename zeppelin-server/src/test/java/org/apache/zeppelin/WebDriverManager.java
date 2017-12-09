@@ -126,6 +126,7 @@ public class WebDriverManager {
         (new WebDriverWait(driver, 30)).until(new ExpectedCondition<Boolean>() {
           @Override
           public Boolean apply(WebDriver d) {
+            d.findElement(By.xpath("//i")).click();
             return d.findElement(By.xpath("//i[@uib-tooltip='WebSocket Connected']"))
                 .isDisplayed();
           }
