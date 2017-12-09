@@ -17,10 +17,16 @@
 
 package org.apache.zeppelin;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -30,11 +36,6 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.fail;
 
@@ -126,7 +127,9 @@ public class WebDriverManager {
         (new WebDriverWait(driver, 30)).until(new ExpectedCondition<Boolean>() {
           @Override
           public Boolean apply(WebDriver d) {
-            d.findElement(By.xpath("//i")).click();
+            for (WebElement webElement : d.findElements(By.xpath("//i"))) {
+              webElement.click();
+            }
             return d.findElement(By.xpath("//i[@uib-tooltip='WebSocket Connected']"))
                 .isDisplayed();
           }
