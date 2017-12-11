@@ -48,7 +48,8 @@ limitations under the License.
       ></code-editor>
     </div>
 
-    <div ng-include src="'app/notebook/paragraph/paragraph-progress-bar.html'"></div>
+    <paragraph-progress-bar></paragraph-progress-bar>
+
     <div>
       <dynamic-forms
         id="paragraph.id"
@@ -73,7 +74,7 @@ limitations under the License.
     </div>
   </div>
 
-  <div ng-include src="'app/notebook/paragraph/paragraph-control.html'"></div>
+  <paragraph-control paragraph="paragraph"></paragraph-control>
 
   <div ng-if="!asIframe" class="paragraphFooter">
     <div ng-show="!paragraph.config.tableHide && !viewOnly"

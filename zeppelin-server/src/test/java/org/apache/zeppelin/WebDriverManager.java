@@ -31,6 +31,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -128,11 +129,12 @@ public class WebDriverManager {
           @Override
           public Boolean apply(WebDriver d) {
             try {
-              for (WebElement webElement : d.findElements(By.xpath("//i"))) {
-                webElement.click();
+              for (WebElement webElement : d.findElements(By.xpath("//i[@uib-tooltip]"))) {
+                LOG.info(webElement.toString());
+                new Actions(d).moveToElement(webElement).build().perform();
               }
             } catch(Exception e) {
-              // Do nothing
+              LOG.info("WebDriver init", e);
             }
             return d.findElement(By.xpath("//i[@uib-tooltip='WebSocket Connected']"))
                 .isDisplayed();
