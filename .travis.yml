@@ -81,21 +81,45 @@ matrix:
     - jdk: "oraclejdk8"
       dist: precise
       env: PYTHON="2" SCALA_VER="2.11" SPARK_VER="2.2.0" HADOOP_VER="2.6" PROFILE="-Pweb-ci -Pspark-2.2 -Phadoop-2.6 -Pscala-2.11" SPARKR="true" BUILD_FLAG="install -DskipTests -DskipRat" TEST_FLAG="test -DskipRat" MODULES="-pl .,zeppelin-interpreter,zeppelin-zengine,zeppelin-server,zeppelin-display,spark-dependencies,spark,python,livy" TEST_PROJECTS="-Dtest=ZeppelinSparkClusterTest,org.apache.zeppelin.spark.*,org.apache.zeppelin.livy.* -DfailIfNoTests=false"
+      addons:
+              apt:
+                sources:
+                - r-packages-precise
+                packages:
+                - r-base-dev
 
     # Test spark module for 2.1.0 with scala 2.11, livy
     - jdk: "oraclejdk7"
       dist: precise
       env: PYTHON="2" SCALA_VER="2.11" SPARK_VER="2.1.0" HADOOP_VER="2.6" PROFILE="-Pweb-ci -Pspark-2.1 -Phadoop-2.6 -Pscala-2.11" SPARKR="true" BUILD_FLAG="install -DskipTests -DskipRat" TEST_FLAG="test -DskipRat" MODULES="-pl .,zeppelin-interpreter,zeppelin-zengine,zeppelin-server,zeppelin-display,spark-dependencies,spark,python,livy" TEST_PROJECTS="-Dtest=ZeppelinSparkClusterTest,org.apache.zeppelin.spark.*,org.apache.zeppelin.livy.* -DfailIfNoTests=false"
+      addons:
+              apt:
+                sources:
+                - r-packages-precise
+                packages:
+                - r-base-dev
 
     # Test spark module for 2.0.2 with scala 2.11
     - jdk: "oraclejdk7"
       dist: precise
       env: PYTHON="2" SCALA_VER="2.11" SPARK_VER="2.0.2" HADOOP_VER="2.6" PROFILE="-Pweb-ci -Pspark-2.0 -Phadoop-2.6 -Pscala-2.11" SPARKR="true" BUILD_FLAG="install -DskipTests -DskipRat" TEST_FLAG="test -DskipRat" MODULES="-pl .,zeppelin-interpreter,zeppelin-zengine,zeppelin-server,zeppelin-display,spark-dependencies,spark,python" TEST_PROJECTS="-Dtest=ZeppelinSparkClusterTest,org.apache.zeppelin.spark.* -DfailIfNoTests=false"
+      addons:
+              apt:
+                sources:
+                - r-packages-precise
+                packages:
+                - r-base-dev
 
     # Test spark module for 1.6.3 with scala 2.10
     - jdk: "oraclejdk7"
       dist: precise
       env: PYTHON="3" SCALA_VER="2.10" SPARK_VER="1.6.3" HADOOP_VER="2.6" PROFILE="-Pweb-ci -Pspark-1.6 -Phadoop-2.6 -Pscala-2.10" SPARKR="true" BUILD_FLAG="install -DskipTests -DskipRat" TEST_FLAG="test -DskipRat" MODULES="-pl .,zeppelin-interpreter,zeppelin-zengine,zeppelin-server,zeppelin-display,spark-dependencies,spark,python" TEST_PROJECTS="-Dtest=ZeppelinSparkClusterTest,org.apache.zeppelin.spark.*,org.apache.zeppelin.spark.* -DfailIfNoTests=false"
+      addons:
+              apt:
+                sources:
+                - r-packages-precise
+                packages:
+                - r-base-dev
 
     # Test spark module for 1.6.3 with scala 2.11
     - jdk: "oraclejdk7"
