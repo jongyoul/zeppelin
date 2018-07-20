@@ -74,7 +74,6 @@ public class PersonalizeActionsIT extends AbstractZeppelinIT {
       System.setProperty(ZeppelinConfiguration.ConfVars.ZEPPELIN_HOME.getVarName(), new File("../").getAbsolutePath());
       ZeppelinConfiguration conf = ZeppelinConfiguration.create();
       shiroPath = conf.getRelativeDir(String.format("%s/shiro.ini", conf.getConfDir()));
-      LOG.error("shiroPath: {}, shiroPath2: {}", shiroPath, conf.getRelativeDir2(String.format("%s/shiro.ini", conf.getConfDir())));
       File file = new File(shiroPath);
       if (file.exists()) {
         originalShiro = StringUtils.join(FileUtils.readLines(file, "UTF-8"), "\n");
