@@ -497,6 +497,14 @@ public class ZeppelinConfiguration extends XMLConfiguration {
   }
 
   public String getRelativeDir(String path) {
+    if (path != null && path.startsWith("/") || isWindowsPath(path)) {
+      return path;
+    } else {
+      return getString(ConfVars.ZEPPELIN_HOME) + "/" + path;
+    }
+  }
+
+  public String getRelativeDir2(String path) {
     if (path != null && path.startsWith(File.separator) || isWindowsPath(path)) {
       return path;
     } else {
