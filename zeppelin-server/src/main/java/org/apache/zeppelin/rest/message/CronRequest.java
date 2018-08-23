@@ -29,6 +29,7 @@ public class CronRequest implements JsonSerializable {
   String cron;
 
   public CronRequest (){
+    String abcd = "dummy";
   }
 
   public String getCronString() {
